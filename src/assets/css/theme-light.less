@@ -1,0 +1,692 @@
+@import "../../../node_modules/muse-ui/less/colors";
+
+
+.change(
+
+  @primaryColor: @pinkA200 ,
+  @darkerPrimaryColor: @blue700,
+  @lighterPrimaryColor: @blue300,      // 浅一点的主色
+  @accentColor: @pinkA200,             // 强调色
+  @darkerAccentColor: @grey100,        // 更深的强调色
+  @lighterAccentColor: @grey500,       // 浅一点的强调色
+
+  // 文本颜色
+  @textColor: @darkBlack,
+  @secondaryTextColor: fade(@fullBlack, 54%),
+  @alternateTextColor: @white,
+  @borderColor: fade(@fullBlack, 12%),
+  @disabledColor: fade(@fullBlack, 38%),
+
+  // background
+  @backgroundColor: @white,           // 背景色
+  @statusBarBackgroundColor: @grey300, // web项目没有状态栏，所以也没有使用
+  @appbarBackgroundColor: @grey100, // 并未在appbar组件中应用
+  @dialogBackgroundColor: @white  // dialogs、 cards、 paper 组件背景
+
+){
+  //自加组件样式
+  .netease .title span{
+    border-color: @primaryColor;
+  }
+  .bot-player{
+    background-color: #f2f0f1;
+  }
+  .bot-player .mu-item-title{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    font-size: 0.3rem;
+  }
+  .bot-player .mu-item-text{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    font-size: 0.25rem;
+  }
+  .control{
+    color: @primaryColor;
+  }
+  .player .mu-item{
+    height: 40px;
+    padding: 8px;
+    min-height: inherit;
+    box-sizing: content-box;
+    color: #fff;
+  }
+  .player .mu-item-title{
+    font-size: 0.30rem;
+    font-family: Roboto,Lato,sans-serif;
+  }
+  .player .mu-item-text{
+    color: #a8a7a7;
+  }
+  .progress .mu-slider{
+    margin-bottom: 0;
+  }
+  .progress span{
+    color: @primaryColor;
+  }
+  .mu-slider-thumb{
+    z-index: 3;
+  }
+  .mu-slider-fill{
+    z-index: 3;
+  }
+  .mu-appbar-title{
+    font-size: .3rem;
+  }
+  .playerlists .mu-list .active .mu-item{
+    color: @primaryColor;
+  }
+  .playerlists .active .mu-item-left{
+    left: 0;
+    width: 8%;
+  }
+  .playerlists .mu-item-right button:before{
+    font-size: .3rem;
+  }
+  .playerlists .active .mu-item-left button{
+    width: 100%;
+    color: @primaryColor;
+  }
+  .playerlists .active .mu-item-content{
+    position: relative;
+  }
+  .playerlists .active .mu-item-content button{
+    padding: 0;
+    font-size: .4rem;
+    width: .4rem;
+    height: .4rem;
+  }
+  .playerlists .active .mu-item-title-row{
+    left: .5rem;
+  }
+  .playerlists .active .mu-item{
+  }
+  .mu-item-title{
+    font-size: .28rem;
+  }
+  button:before{
+
+  }
+  .allLyric .active{
+    color: @primaryColor;
+  }
+
+
+  .mu-appbar {
+    background-color: @primaryColor;
+    color: #ffffff;
+  }
+  .mu-avatar {
+    color: #ffffff;
+    background-color: #bdbdbd;
+  }
+  .mu-badge {
+    background-color: #bdbdbd;
+    color: #ffffff;
+  }
+  .mu-badge-primary {
+    background-color: @primaryColor;
+    color: #ffffff;
+  }
+  .mu-badge-secondary {
+    background-color: #ff4081;
+    color: #ffffff;
+  }
+  body {
+    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: Roboto, Lato, sans-serif;
+  }
+  a {
+    color: #ff4081;
+  }
+  .mu-bottom-nav {
+    background-color: #ffffff;
+  }
+  .mu-bottom-nav-shift {
+    background-color: @primaryColor;
+  }
+  .mu-buttom-item {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-bottom-nav-shift .mu-buttom-item {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .mu-bottom-item-active .mu-bottom-item-text {
+    color: @primaryColor;
+  }
+  .mu-bottom-nav-shift .mu-bottom-item-active .mu-bottom-item-text {
+    color: #ffffff;
+  }
+  .mu-bottom-item-active .mu-bottom-item-icon {
+    color: @primaryColor;
+  }
+  .mu-bottom-nav-shift .mu-bottom-item-active .mu-bottom-item-icon {
+    color: #ffffff;
+  }
+  .mu-bottom-sheet {
+    background-color: #ffffff;
+  }
+  .mu-card {
+    background-color: #ffffff;
+  }
+  .mu-card-header-title .mu-card-title {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-card-header-title .mu-card-sub-title {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-card-media-title {
+    background-color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-card-media-title .mu-card-title {
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .mu-card-media-title .mu-card-sub-title {
+    color: rgba(255, 255, 255, 0.54);
+  }
+  .mu-card-title-container .mu-card-title {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-card-title-container .mu-card-sub-title {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-card-text {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-checkbox input[type="checkbox"]:checked + .mu-checkbox-wrapper .mu-checkbox-icon-uncheck {
+    color: @primaryColor;
+  }
+  .mu-checkbox input[type="checkbox"]:checked + .mu-checkbox-wrapper .mu-checkbox-ripple-wrapper {
+    color: @primaryColor;
+  }
+  .mu-checkbox-label {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-checkbox.disabled .mu-checkbox-label {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-checkbox-icon-uncheck {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-checkbox.disabled .mu-checkbox-icon-uncheck {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-checkbox-icon-checked {
+    color: @primaryColor;
+  }
+  .mu-checkbox.disabled .mu-checkbox-icon-checked {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-chip {
+    background-color: #e0e0e0;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-chip.hover {
+    background-color: #cecece;
+    cursor: pointer;
+  }
+  .mu-chip.hover .mu-chip-delete-icon {
+    color: rgba(0, 0, 0, 0.4);
+  }
+  .mu-chip-delete-icon {
+    color: rgba(0, 0, 0, 0.26);
+  }
+  .mu-circular-progress{
+    margin: 0 auto;
+    padding-top: 30px;
+    box-sizing: content-box;
+    display: block;
+  }
+  .mu-circular-progress-determinate-path {
+    stroke: @primaryColor;
+  }
+  .mu-calendar {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-calendar-year {
+    background-color: #ffffff;
+  }
+  .mu-date-display {
+    background-color: @primaryColor;
+    color: #ffffff;
+  }
+  .mu-day-button-bg {
+    background-color: @primaryColor;
+  }
+  .mu-day-button-text {
+    font-weight: 400;
+    position: relative;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-day-button.now .mu-day-button-text {
+    color: @primaryColor;
+  }
+  .mu-day-button.hover .mu-day-button-text,
+  .mu-day-button.selected .mu-day-button-text {
+    color: #ffffff;
+  }
+  .mu-year-button-text {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-year-button.selected .mu-year-button-text {
+    color: @primaryColor;
+  }
+  .mu-year-button.hover .mu-year-button-text {
+    color: @primaryColor;
+  }
+  .mu-dialog {
+    background-color: #ffffff;
+  }
+  .mu-dialog-footer.scrollable,
+  .mu-dialog-header.scrollable {
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+  }
+  .mu-dialog-title {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-dialog-body {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .mu-dropDown-menu-text {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-dropDown-menu-icon {
+    color: rgba(0, 0, 0, 0.12);
+  }
+  .mu-dropDown-menu-line {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+  .mu-flat-button {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: transparent;
+  }
+  .mu-flat-button .mu-circle-ripple {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-flat-button-primary {
+    color: @primaryColor;
+  }
+  .mu-flat-button-secondary {
+    color: #ff4081;
+  }
+  .mu-float-button {
+    background-color: @primaryColor;
+    color: #ffffff;
+  }
+  .mu-float-button.disabled {
+    color: rgba(0, 0, 0, 0.3);
+    cursor: default;
+    background-color: #e0e0e0;
+  }
+  .mu-float-button.hover .mu-float-button-wrapper,
+  .mu-float-button:active .mu-float-button-wrapper {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  .mu-float-button-secondary {
+    background-color: #ff4081;
+    color: #ffffff;
+  }
+  .mu-grid-tile-titlebar {
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 35px !important;
+  }
+  .mu-grid-tile-title-container {
+    color: #ffffff;
+  }
+  .mu-grid-tile{
+    width: 178px;
+    margin: 0 auto;
+  }
+  .mu-grid-tile-action{
+    padding-right: 5px;
+    color: #ffffff;
+  }
+  .mu-grid-tile-action .mu-icon {
+    color: #ffffff;
+  }
+  .mu-circle-spinner {
+    border-color: @primaryColor;
+  }
+  .mu-circle-secondary {
+    border-color: #ff4081;
+  }
+  .mu-linear-progress {
+    background-color: #bdbdbd;
+  }
+  .mu-linear-progress-indeterminate {
+    background-color: @primaryColor;
+  }
+  .mu-linear-progress-determinate {
+    background-color: @primaryColor;
+  }
+  .mu-item-wrapper.hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .mu-item {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-item.selected {
+    color: @primaryColor;
+  }
+  .mu-item-link-icon {
+    color: #757575;
+  }
+  .white .mu-item-title{
+    color: #fff;
+    font-size: 14px;
+  }
+  .mu-item-left {
+    color: #757575;
+  }
+  .mu-item-right {
+    color: #757575;
+  }
+  .mu-item-after {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-item-text {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-menu-item-wrapper {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-menu-item-wrapper.active {
+    color: #ff4081;
+  }
+  .mu-menu-item-wrapper.hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .mu-menu-item-wrapper.disabled {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-menu-item-left-icon {
+    color: #757575;
+  }
+  .mu-menu-item-right-icon {
+    color: #757575;
+  }
+  .mu-pagination-item {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-pagination-item.hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .mu-pagination-item.active {
+    color: #ffffff;
+    background-color: @primaryColor;
+  }
+  .mu-pagination-item.disabled {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-paper {
+    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-picker {
+    background-color: #ffffff;
+  }
+  .mu-picker-center-highlight::before,
+  .mu-picker-center-highlight::after {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+  .mu-picker-slot.mu-picker-slot-divider {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-picker-item {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-picker-item.selected {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-popover {
+    background-color: #ffffff;
+  }
+  .mu-popup {
+    background-color: #ffffff;
+  }
+  .mu-radio input[type="radio"]:checked + .mu-radio-wrapper .mu-radio-icon-uncheck {
+    color: @primaryColor;
+  }
+  .mu-radio input[type="radio"]:checked + .mu-radio-wrapper .mu-radio-ripple-wrapper {
+    color: @primaryColor;
+  }
+  .mu-radio-label {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-radio.disabled .mu-radio-label {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-radio-icon-uncheck {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-radio.disabled .mu-radio-icon-uncheck {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-radio-icon-checked {
+    color: @primaryColor;
+  }
+  .mu-radio.disabled .mu-radio-icon-checked {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-raised-button {
+    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-raised-button.hover .mu-raised-button-wrapper {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .mu-raised-button.disabled {
+    color: rgba(0, 0, 0, 0.3);
+    background-color: #e6e6e6;
+  }
+  .mu-raised-button-primary {
+    background-color: @primaryColor;
+  }
+  .mu-raised-button-secondary {
+    background-color: #ff4081;
+  }
+  .mu-refresh-control {
+    color: @primaryColor;
+  }
+  .mu-slider-track {
+    background-color: #bdbdbd;
+  }
+  .mu-slider-fill {
+    background-color: @primaryColor;
+  }
+  .mu-slider-fill.disabled {
+    background-color: #bdbdbd;
+  }
+  .mu-slider-thumb {
+    background-color: @primaryColor;
+    color: @primaryColor;
+  }
+  .mu-slider.zero .mu-slider-thumb,
+  .mu-slider.disabled .mu-slider-thumb {
+    border-color: #bdbdbd;
+    color: #bdbdbd;
+    background-color: #ffffff;
+  }
+  .mu-snackbar {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-step-button {
+    background-color: transparent;
+  }
+  .mu-step-button.hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+  .mu-step-connector-line {
+    border-color: #bdbdbd;
+  }
+  .mu-stepper-vertical .mu-step-content {
+    border-left: 1px solid #bdbdbd;
+  }
+  .mu-step-label {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-step-label.disabled {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-step-label-icon {
+    color: #9e9e9e;
+  }
+  .mu-step-label.disabled .mu-step-label-icon {
+    color: #9e9e9e;
+  }
+  .mu-step-label.completed .mu-step-label-icon,
+  .mu-step-label.active .mu-step-label-icon {
+    color: @primaryColor;
+  }
+  .mu-step-label-circle {
+    background-color: #9e9e9e;
+    color: #ffffff;
+  }
+  .mu-step-label.disabled .mu-step-label-circle {
+    background-color: #9e9e9e;
+  }
+  .mu-step-label.completed .mu-step-label-circle,
+  .mu-step-label.active .mu-step-label-circle {
+    background-color: @primaryColor;
+  }
+  .mu-sub-header {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-switch input[type="checkbox"]:checked + .mu-switch-wrapper .mu-switch-track {
+    background-color: rgba(33, 150, 243, 0.5);
+  }
+  .mu-switch input[type="checkbox"]:checked + .mu-switch-wrapper .mu-switch-thumb {
+    background-color: @primaryColor;
+    color: @primaryColor;
+  }
+  .mu-switch.disabled input[type="checkbox"]:checked + .mu-switch-wrapper .mu-switch-track {
+    background-color: #bdbdbd;
+  }
+  .mu-switch.disabled input[type="checkbox"]:checked + .mu-switch-wrapper .mu-switch-thumb {
+    background-color: #e0e0e0;
+  }
+  .mu-switch-label {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-switch.disabled .mu-switch-label {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-switch-track {
+    background-color: #bdbdbd;
+  }
+  .mu-switch.disabled .mu-switch-track {
+    background-color: #bdbdbd;
+  }
+  .mu-switch-thumb {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #f5f5f5;
+  }
+  .mu-switch.disabled .mu-switch-thumb {
+    background-color: #e0e0e0;
+  }
+  .mu-table {
+    background-color: #ffffff;
+  }
+  .mu-thead {
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+  }
+  .mu-th {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-tr {
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-tr.selected {
+    background-color: #f5f5f5;
+  }
+  .mu-tr.hover {
+    background-color: #eeeeee;
+  }
+  .mu-tr.stripe {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  .mu-tfoot .mu-tr {
+    border-top-color: rgba(0, 0, 0, 0.12);
+  }
+  .mu-tabs {
+    background-color: @primaryColor;
+  }
+  .mu-tab-link-highlight {
+    background-color: @primaryColor;
+  }
+  .mu-tab-link {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .mu-tab-active {
+    color: @primaryColor;
+  }
+  .mu-text-field {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  .mu-text-field.focus-state {
+    color: @primaryColor;
+  }
+  .mu-text-field.focus-state.error {
+    color: #f44336;
+  }
+  .mu-text-field.disabled {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-text-field-input {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .mu-text-field.error .mu-text-field-help {
+    color: #f44336;
+  }
+  .mu-text-field-line {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+  .mu-text-field-line.disabled {
+    border-color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-text-field-focus-line {
+    background-color: @primaryColor;
+  }
+  .mu-text-field-focus-line.error {
+    background-color: #f44336;
+  }
+  .mu-text-field-hint {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-text-field.has-label .mu-text-field-label.float {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .mu-clock-circle {
+    background-color: rgba(0, 0, 0, 0.07);
+  }
+  .mu-time-display {
+    background-color: @primaryColor;
+    color: #ffffff;
+  }
+  .mu-clock-number.selected {
+    background-color: @primaryColor;
+    color: #ffffff;
+  }
+  .mu-clock-pointer {
+    background-color: @primaryColor;
+  }
+  .mu-clock-pointer-mark {
+    background-color: #ffffff;
+    border-color: @primaryColor;
+  }
+  .mu-toast {
+    background-color: rgba(0, 0, 0, 0.87);
+    color: #ffffff;
+  }
+  .mu-tooltip {
+    color: #ffffff;
+  }
+  .mu-tooltip-ripple.when-shown {
+    background-color: #616161;
+  }
+}
