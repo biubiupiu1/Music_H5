@@ -48,25 +48,23 @@
           return this.$route.params;
       }
     },
+    beforeRouteUpdate (to, from, next) {
+      this.SetAlpha();
+      if(this.info.id !== to.params.id){
+        this.LoadInfo();
+        this.GetData(next);
+      }
+    },
+    beforeRouteLeave(to, from, next){
+      window.onscroll = null;
+      next();
+    },
     created(){
         this.LoadInfo();
         this.GetData();
     },
     mounted(){
         this.SetAlpha();
-    },
-    watch:{
-      $route(val){
-        if(val.name === 'SongList'){
-          this.SetAlpha();
-        }else {
-          window.onscroll = null;
-        }
-        if(val.name === 'SongList' && this.info.id !== val.params.id){
-          this.LoadInfo();
-          this.GetData();
-        }
-      }
     },
     methods:{
         LoadInfo(res){
@@ -103,9 +101,11 @@
               _this.lists.push(obj)
             }
         },
-        GetData(){
+        GetData(callback){
           this.$http.get(this.$api.getSongSheetDetail(this.routerData.id)).then((res) => {
             this.LoadLists(res.data);
+            if(typeof callback === 'function')
+                callback();
             //console.log(res.data);
             if(!this.routerData.data){
                 this.LoadInfo(res.data);
@@ -130,6 +130,7 @@
           };
         },
         handleScroll(rgb){
+          console.log(5);
           let alpha = window.scrollY / 350;
           document.querySelector('.mu-appbar').style.backgroundColor = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
         },

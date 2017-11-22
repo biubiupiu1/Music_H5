@@ -5,12 +5,39 @@
     <div class="top">
       <mu-appbar>
         <mu-icon-button class="iconfont icon-fanhui" slot="left" @click.nativ="ToHome"></mu-icon-button>
-        <mu-icon-button icon="expand_more" slot="right"/>
+        <mu-icon-button class="iconfont icon-41" slot="right"/>
         <mu-list-item :title="song.name" :describeText="song.autho"></mu-list-item>
       </mu-appbar>
     </div>
 
-    <div class="group">
+    <div class="comments" v-show="isComment">
+      <div class="comment">
+        <mu-list-item title="皇试试的" describeText="Jan 9, 2014">
+          <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
+            <span slot="right">6666</span>
+            <i class="iconfont icon-dianzan1"  slot="right"></i>
+        </mu-list-item>
+        <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
+      </div>
+      <div class="comment">
+        <mu-list-item title="皇试试的" describeText="Jan 9, 2014">
+          <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
+          <span slot="right">6666</span>
+          <i class="iconfont icon-dianzan1"  slot="right"></i>
+        </mu-list-item>
+        <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
+      </div>
+      <div class="comment">
+        <mu-list-item title="皇试试的" describeText="Jan 9, 2014">
+          <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
+          <span slot="right">6666</span>
+          <i class="iconfont icon-dianzan1"  slot="right"></i>
+        </mu-list-item>
+        <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
+      </div>
+    </div>
+
+    <div class="group" v-show="!isComment">
       <transition-group name="fade" >
         <div v-show="!isLyric" @click="ToggleLyric" key="group1">
           <div class="content">
@@ -25,10 +52,12 @@
 
         <div class="allLyric" v-show="isLyric" @click="ToggleLyric" key="group2">
           <div ref="lyrics" @touchmove="TouchMove">
+
             <p ref="lyric" v-for="( item , _index ) in lyrics" :class="{ active: _index == index - 1 }">
               <span class="centerXY">{{isRoll ? item.content : item}}</span>
             </p>
             <p v-for="item in 4"></p>
+
           </div>
         </div>
 
@@ -59,7 +88,7 @@
 </template>
 
 <script>
-  let timer;
+  let timer ,timerOut;
   import { mapState } from 'vuex'
   import scroll_To from '../libs/scroll'
   import slider from '../libs/slider/Index.vue'
@@ -73,7 +102,8 @@
         isRoll: false,
         index: 0,
         timeEr: null,
-        lyrics: []
+        lyrics: [],
+        isComment: true
       }
     },
     created(){
@@ -129,22 +159,12 @@
           this.$refs.lyrics.scrollTop = 0;
           this.LoadLyrics();
       },
-      StoIndex(){
-
-      },
-      lyrics(val){
-        //console.log(val);
-      },
-      isTouch(val){
-        //console.log(val);
-      },
       index(val , oldVal){
         let _this = this;
         let dom = this.$refs.lyrics;
         if(this.$refs.lyric && !this.isTouch){
           let tScrollTop = Number ( ( val - 4 ) * window.fontsize );
           tScrollTop = tScrollTop >=0 ? tScrollTop : 0;
-          console.log(tScrollTop);
           clearInterval(timer);
           timer = setInterval(function () {
 
@@ -172,6 +192,7 @@
       LoadLyrics(){
         let lrcArr = [];
         if( !this.song.lyric ) return;
+
         let lyrics = this.song.lyric.split('\n');
         lyrics.pop();
         let timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
@@ -213,7 +234,8 @@
       TouchMove(e){
         this.isTouch = true;
         let _this = this;
-        setTimeout(function () {
+        clearTimeout(timerOut);
+        timerOut = setTimeout(function () {
           _this.isTouch = false;
         },3000)
       },
@@ -276,7 +298,6 @@
 .Lyric{
   width: 100%;
   height: 1.5rem;
-  transition: all .3s;
 }
 .Lyric p{
   width: 80%;
@@ -342,8 +363,26 @@
   top: 11px;
   z-index: 2;
 }
-.group{
+.group ,.comments{
   height: 8.5rem;
   overflow: hidden;
+}
+.comments{
+  padding: 30px 0;
+}
+.comment{
+  width: 96%;
+  margin: 0 auto;
+  border-bottom: 1px solid #8c8c8c;
+}
+.comment p{
+  width: 98%;
+  margin: 0 auto;
+  color: #d9d9d9;
+  word-wrap:break-word;
+  padding-bottom: 15px;
+}
+.comment_content{
+  color: #fff;
 }
 </style>

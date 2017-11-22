@@ -43,6 +43,7 @@ export default new Router({
       path: '/songlist/:id',
       name: 'SongList',
       component: SongList,
+      children: []
     }
   ]
 })

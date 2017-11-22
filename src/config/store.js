@@ -69,8 +69,8 @@ const store = new Vuex.Store({
           if(res.data.lyricUser)
             state.song.lyricUser = res.data.lyricUser.nickname;
           state.song.lyric = res.data.lrc.lyric;
-        } else {
-          state.song.lyric = "暂无歌词@^^@";
+        }else {
+          state.song.lyric = "暂无歌词@^^@\n";
         }
         state.song = Object.assign({},state.song);
       })
