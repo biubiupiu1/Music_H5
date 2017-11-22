@@ -2,38 +2,17 @@
   <div class="player">
     <div class="covebg" :style="{'background': 'url(' + bgUrl + ')'}"></div>
 
-    <div class="top">
-      <mu-appbar>
-        <mu-icon-button class="iconfont icon-fanhui" slot="left" @click.nativ="ToHome"></mu-icon-button>
-        <mu-icon-button class="iconfont icon-41" slot="right"/>
-        <mu-list-item :title="song.name" :describeText="song.autho"></mu-list-item>
-      </mu-appbar>
-    </div>
-
+    <page-top :data="{title: song.name, describe: song.autho, fun: ToHome}"></page-top>
     <div class="comments" v-show="isComment">
-      <div class="comment">
-        <mu-list-item title="皇试试的" describeText="Jan 9, 2014">
-          <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
+      <div style="overflow-y: auto;height: 100%">
+        <div class="comment" v-for="n in 5">
+          <mu-list-item title="皇试试的" describeText="Jan 9, 2014" disabled>
+            <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
             <span slot="right">6666</span>
             <i class="iconfont icon-dianzan1"  slot="right"></i>
-        </mu-list-item>
-        <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
-      </div>
-      <div class="comment">
-        <mu-list-item title="皇试试的" describeText="Jan 9, 2014">
-          <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
-          <span slot="right">6666</span>
-          <i class="iconfont icon-dianzan1"  slot="right"></i>
-        </mu-list-item>
-        <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
-      </div>
-      <div class="comment">
-        <mu-list-item title="皇试试的" describeText="Jan 9, 2014">
-          <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
-          <span slot="right">6666</span>
-          <i class="iconfont icon-dianzan1"  slot="right"></i>
-        </mu-list-item>
-        <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
+          </mu-list-item>
+          <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
+        </div>
       </div>
     </div>
 
@@ -46,20 +25,11 @@
             </div>
           </div>
           <div class="Lyric">
-            <p>{{lyric}}</p>
+            <p>{{}}</p>
           </div>
         </div>
 
-        <div class="allLyric" v-show="isLyric" @click="ToggleLyric" key="group2">
-          <div ref="lyrics" @touchmove="TouchMove">
-
-            <p ref="lyric" v-for="( item , _index ) in lyrics" :class="{ active: _index == index - 1 }">
-              <span class="centerXY">{{isRoll ? item.content : item}}</span>
-            </p>
-            <p v-for="item in 4"></p>
-
-          </div>
-        </div>
+        <lyric v-show="isLyric" key="group2"></lyric>
 
       </transition-group>
     </div>
@@ -92,18 +62,14 @@
   import { mapState } from 'vuex'
   import scroll_To from '../libs/scroll'
   import slider from '../libs/slider/Index.vue'
+  import pageTop from '../components/PageTop.vue'
+  import lyric from '../components/Lyric.vue'
   export default {
-    components:{ slider  },
+    components:{ slider, pageTop, lyric},
     data () {
       return {
-        tNow: 0,
-        isLyric: false,
-        isTouch: false,
-        isRoll: false,
-        index: 0,
-        timeEr: null,
-        lyrics: [],
-        isComment: true
+        isLyric: true,
+        isComment: false
       }
     },
     created(){
@@ -120,30 +86,6 @@
       repeatIcon(){
         return this.repeat ? 'icon-icon-repeat' : 'icon-icon-order';
       },
-
-      lyric(){
-
-        if( !this.$empty(this.lyrics) ){
-
-            if( !this.isRoll ) return "暂不支持滚动@__@";
-            let s = Number(this.player.nowTime);
-            let diff = s - this.tNow;
-            let begain = diff >= 0 ? this.index : 0;
-            let end = diff >= 0 ? this.lyrics.length : this.index;
-            for( var i = begain; i < end; i++ ){
-              if(Number( this.lyrics[i].time) > s){
-                this.index = i;
-                break;
-              }
-            }
-            if(i === end)
-                this.index = this.lyrics.length;
-            this.tNow = s;
-            return this.lyrics[this.index - 1 > 0 ? this.index-1 : 0].content;
-        } else {
-            return {contet: '加载中....'};
-        }
-      },
       bgUrl(){
         let reg = /.*\/(\d+)\..*/;
         let id = this.song.headerUrl.replace(reg, "$1");
@@ -151,67 +93,9 @@
       }
     },
     watch:{
-      song(){
-          clearInterval(timer);
-          this.index = 0;
-          this.tNow = 0;
-          this.isRoll = false;
-          this.$refs.lyrics.scrollTop = 0;
-          this.LoadLyrics();
-      },
-      index(val , oldVal){
-        let _this = this;
-        let dom = this.$refs.lyrics;
-        if(this.$refs.lyric && !this.isTouch){
-          let tScrollTop = Number ( ( val - 4 ) * window.fontsize );
-          tScrollTop = tScrollTop >=0 ? tScrollTop : 0;
-          clearInterval(timer);
-          timer = setInterval(function () {
 
-            let iScrollTop = dom.scrollTop;
-            let tS = tScrollTop - iScrollTop;
-
-            if( tS >= 0){
-              dom.scrollTop += Math.ceil(tS / 10);
-              if(dom.scrollTop >= tScrollTop){
-                dom.scrollTop = tScrollTop;
-                clearInterval(timer);
-              }
-            } else {
-              dom.scrollTop += Math.floor(tS / 10) ;
-              if(dom.scrollTop <= tScrollTop ){
-                dom.scrollTop = tScrollTop;
-                clearInterval(timer);
-              }
-            }
-          },20)
-        }
-      }
     },
     methods:{
-      LoadLyrics(){
-        let lrcArr = [];
-        if( !this.song.lyric ) return;
-
-        let lyrics = this.song.lyric.split('\n');
-        lyrics.pop();
-        let timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
-        let autho = /\[\d*:\d*((\.|\:)\d*)*\]/g;
-        let index = 1;
-        for(let i = 0 ; i < lyrics.length ; i++){
-          let time = lyrics[i].match(timeReg);
-          let content = lyrics[i].replace(timeReg, '');
-          if(time && content){
-            if(!this.isRoll) this.isRoll = true;
-            let min = Number ( String(time[0].match(/\[\d*/i)).slice(1) );
-            let sec = Number ( String(time[0].match(/\:\d*(\.\d*)?/g)).slice(1));
-            let TimeS = min * 60 + sec;
-            let obj = {time: TimeS ,content: content};
-            lrcArr.push(obj);
-          }
-        }
-        this.lyrics = !this.isRoll ? lyrics : lrcArr;
-      },
       ToHome(){
           this.$emit('toHome');
       },
@@ -231,14 +115,7 @@
       ToggleRepeat(){
         this.$store.state.repeat = !this.$store.state.repeat;
       },
-      TouchMove(e){
-        this.isTouch = true;
-        let _this = this;
-        clearTimeout(timerOut);
-        timerOut = setTimeout(function () {
-          _this.isTouch = false;
-        },3000)
-      },
+
       ToggleLyric(){
         this.isLyric = !this.isLyric;
       }
@@ -267,9 +144,7 @@
   position: relative;
   width: 70%;
 }
-.top .mu-appbar{
-  background: rgba(0,0,0,0);
-}
+
 .player .covebg{
   opacity: 0.3;
 }
@@ -369,6 +244,7 @@
 }
 .comments{
   padding: 30px 0;
+  overflow-y: auto;
 }
 .comment{
   width: 96%;
