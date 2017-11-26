@@ -30,16 +30,35 @@ export default {
     ...mapState([ 'songList' ]),
   },
   created(){
+    this.$store.state.reSize.push(this.setRem);
+    this.reSize();
+    let resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+    window.addEventListener(resizeEvt, this.reSize, false);
   },
   watch:{
     songList(val){
       this.isBot = val.length > 0 ? 1 : 0;
-    }
+    },
   },
   methods:{
     OpenSheet(){
       this.isSheet = true;
     },
+    reSize(){
+      let funs = this.$store.state.reSize;
+      for(let i = 0; i < funs.length; i++){
+          if(typeof funs[i] === 'function')
+              funs[i]();
+      }
+    },
+    setRem() {
+      let _html = document.getElementsByTagName("html")[0];
+      let w = document.body && document.body.clientWidth || _html.offsetWidth;
+      let p = Number(w / 720).toFixed(3);
+      p = p > 1.067 ? 1.067 : p < 0.444 ? 0.444 : p;
+      _html.setAttribute("style", "font-size:"+ p * 100 + "px");
+      window.fontsize = p * 100;
+    }
   }
 }
 </script>

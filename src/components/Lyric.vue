@@ -1,14 +1,31 @@
 <template>
-  <div class="allLyric">
-    <div ref="lyrics" @touchmove="TouchMove">
+  <div class="group">
+    <transition-group name="fade" >
+      <div v-show="!isLyric" @click="ToggleLyric" key="group1">
+        <div class="content">
+          <div class="img center">
+            <img class="center" :src="song.headerUrl" alt="">
+          </div>
+        </div>
+        <div class="Lyric">
+          <p>{{lyric}}</p>
+        </div>
+      </div>
 
-      <p ref="lyric" v-for="( item , _index ) in lyrics" :class="{ active: _index == index - 1 }">
-        <span class="centerXY">{{isRoll ? item.content : item}}</span>
-      </p>
-      <p v-for="item in 4"></p>
+      <div class="allLyric" v-show="isLyric" key="group2" @click="ToggleLyric">
+        <div ref="lyrics" @touchmove="TouchMove">
 
-    </div>
+          <p ref="lyric" v-for="( item , _index ) in lyrics" :class="{ active: _index == index - 1 }">
+            <span class="centerXY">{{isRoll ? item.content : item}}</span>
+          </p>
+          <p v-for="item in 4"></p>
+
+        </div>
+      </div>
+
+    </transition-group>
   </div>
+
 </template>
 
 <script>
@@ -21,6 +38,7 @@
         index: 0,
         isRoll: false,
         isTouch: false,
+        isLyric: false,
         tNow: 0,
       }
     },
@@ -30,7 +48,6 @@
     computed: {
       ...mapState(['song' , 'player' , 'songList' , 'state' , 'repeat' ]),
       lyric(){
-
         if( !this.$empty(this.lyrics) ){
 
           if( !this.isRoll ) return "暂不支持滚动@__@";
@@ -92,6 +109,9 @@
       },
     },
     methods: {
+      ToggleLyric(){
+        this.isLyric = !this.isLyric;
+      },
       LoadLyrics(){
         let lrcArr = [];
         if( !this.song.lyric ) return;
@@ -128,6 +148,39 @@
 </script>
 
 <style scoped>
+.content{
+  position: relative;
+  height: 7rem;
+}
+.content .img{
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 2rem;
+  overflow: hidden;
+  background: url("../assets/img/play_bg.png") no-repeat 50%;
+  background-size: contain;
+}
+.content .img img{
+  width: 68%;
+  display: block;
+  z-index: -1;
+}
+.control{
+  width: 70%;
+  margin: 0 auto;
+  bottom: .3rem;
+}
+.Lyric{
+  width: 100%;
+  height: 1.5rem;
+}
+.Lyric p{
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  font-size: .28rem;
+}
 .allLyric{
   color: #fff;
   height:7rem;

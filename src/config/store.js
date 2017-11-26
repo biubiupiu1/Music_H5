@@ -10,6 +10,7 @@ import Toast from '../libs/toast/src/toast'
 
 const store = new Vuex.Store({
   state: {
+    reSize: [],
     state: false,
     index: '',
     songList: [],

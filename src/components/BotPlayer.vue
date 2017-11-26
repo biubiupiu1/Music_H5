@@ -3,7 +3,7 @@
     <audio :src="song.fileUrl" @ended="Next" @canplay="canPlay" @timeupdate="LoadPlayerProgress" id="CoreAudio" ref="CoreAudio"/>
     <div class="header float">
       <mu-list-item :title="song.name" :describeText="song.autho" disabled>
-        <div slot="left" class="header">
+        <div slot="left" class="auto">
           <mu-circular-progress :size="40" class="loading centerXY" v-if="song.loading"/>
           <mu-avatar @click="ToPlayer":src="song.headerUrl" class="centerXY" v-else/>
         </div>
@@ -90,9 +90,11 @@ export default {
 <style scoped>
 .bot-player{
   position: fixed;
-  bottom: -1px;
+  bottom: 0px;
   width: 100%;
-  height: 70px;
+  height: 1.15rem;
+  z-index: 10000;
+  background-color: #f2f0f1;
 }
 .header{
   width: 55%;
@@ -103,6 +105,7 @@ export default {
 }
 .control{
   width: 40%;
+  height: 1.15rem;
 }
 .control .float{
   width: 32%;

@@ -16,4 +16,14 @@ export default {
   getLyric(id){
     return `${TEMP}/lyric?id=${id}`
   },
+  getComments(id, limit){
+    return `${TEMP}/comment/music?id=${id}&limit=${limit}`
+  },
+  getSongDetail(id) {
+    return `${TEMP}/song/detail?ids=${id}`
+  },
+  getPersonalized() {
+    return `${TEMP}/personalized`
+  }
 }
+

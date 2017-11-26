@@ -16,6 +16,7 @@
         </mu-flexbox-item>
       </mu-flexbox>
     </div>
+    <mu-infinite-scroll :scroller="scroller" :loading="isLoadMore" :loadingText="loadingText" @load="loadMore"/>
   </div>
 </template>
 
@@ -25,15 +26,40 @@
     data () {
       return {
         songLists: [],
-        isLoading: true
+        isLoading: true,
+        num: 10,
+        scroller: null,
+        isLoadMore: false,
+        loadingText: '加载中。。。'
       }
     },
     created(){
-      this.$http.get(this.$api.getSongSheet('hot',10)).then((res) => {
-        this.LoadLists(res.data.playlists)
-      });
+      this.loadData();
+      this.$http.get(this.$api.getPersonalized()).then((res) => {
+        console.log(res.data)
+      })
+    },
+    mounted(){
+      this.scroller = this.$el;
     },
     methods:{
+      loadData() {
+        this.$http.get(this.$api.getSongSheet('hot', this.num)).then((res) => {
+          console.log(res.data)
+          //this.songLists = res.data.playlists
+          this.LoadLists(res.data.playlists);
+          this.isLoading = false;
+          this.isLoadMore = false;
+          this.num += 10;
+        });
+      },
+      loadMore() {
+        this.isLoadMore = true;
+        if(this.num > 100){
+            this.loadingText = '我是有底线的@_@'
+        } else
+            this.loadData();
+      },
       LoadLists(data){
         let _this = this;
         data.forEach(function (e) {

@@ -2,37 +2,9 @@
   <div class="player">
     <div class="covebg" :style="{'background': 'url(' + bgUrl + ')'}"></div>
 
-    <page-top :data="{title: song.name, describe: song.autho, fun: ToHome}"></page-top>
-    <div class="comments" v-show="isComment">
-      <div style="overflow-y: auto;height: 100%">
-        <div class="comment" v-for="n in 5">
-          <mu-list-item title="皇试试的" describeText="Jan 9, 2014" disabled>
-            <mu-avatar src="http://p1.music.126.net/r4OXsQQn_JIvEKklzQBV_w==/2271591023036753.jpg" slot="leftAvatar"/>
-            <span slot="right">6666</span>
-            <i class="iconfont icon-dianzan1"  slot="right"></i>
-          </mu-list-item>
-          <p class="comment_content">commentcommentcommentcommentcommentcommentcomment</p>
-        </div>
-      </div>
-    </div>
+    <page-top :data="{title: song.name, describe: song.autho, icon: 'icon-41', funLeft: ToHome, funRight: ToComments}"></page-top>
 
-    <div class="group" v-show="!isComment">
-      <transition-group name="fade" >
-        <div v-show="!isLyric" @click="ToggleLyric" key="group1">
-          <div class="content">
-            <div class="img center">
-              <img class="center" :src="song.headerUrl" alt="">
-            </div>
-          </div>
-          <div class="Lyric">
-            <p>{{}}</p>
-          </div>
-        </div>
-
-        <lyric v-show="isLyric" key="group2"></lyric>
-
-      </transition-group>
-    </div>
+    <lyric></lyric>
 
     <div class="progress">
       <span>{{player.nowTime | timeOut}}</span>
@@ -60,7 +32,6 @@
 <script>
   let timer ,timerOut;
   import { mapState } from 'vuex'
-  import scroll_To from '../libs/scroll'
   import slider from '../libs/slider/Index.vue'
   import pageTop from '../components/PageTop.vue'
   import lyric from '../components/Lyric.vue'
@@ -68,7 +39,6 @@
     components:{ slider, pageTop, lyric},
     data () {
       return {
-        isLyric: true,
         isComment: false
       }
     },
@@ -99,6 +69,13 @@
       ToHome(){
           this.$emit('toHome');
       },
+      ToComments(){
+        if(!this.$empty(this.song.id)){
+          this.ToHome();
+          this.$router.push({ name: 'Comments', params: {id: this.song.id, name: this.song.name }});
+        }
+
+      },
       TogglePlay(){
         this.$store.commit('TogglePlayerState');
       },
@@ -115,10 +92,6 @@
       ToggleRepeat(){
         this.$store.state.repeat = !this.$store.state.repeat;
       },
-
-      ToggleLyric(){
-        this.isLyric = !this.isLyric;
-      }
     },
     filters:{
       timeOut(val){
@@ -148,65 +121,7 @@
 .player .covebg{
   opacity: 0.3;
 }
-.content{
-  position: relative;
-  height: 7rem;
-}
-.content .img{
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: 2rem;
-  overflow: hidden;
-  background: url("../assets/img/play_bg.png") no-repeat 50%;
-  background-size: contain;
-}
-.content .img img{
-  width: 68%;
-  display: block;
-  z-index: -1;
-}
-.control{
-  width: 70%;
-  margin: 0 auto;
-  bottom: .3rem;
-}
-.Lyric{
-  width: 100%;
-  height: 1.5rem;
-}
-.Lyric p{
-  width: 80%;
-  margin: 0 auto;
-  text-align: center;
-  color: #fff;
-  font-size: .28rem;
-}
-.allLyric{
-  color: #fff;
-  height:7rem;
-  text-align: center;
-  margin: .75rem 0;
-  overflow: hidden;
-  position: relative;
-}
-.allLyric>div{
-  overflow-y: auto;
-  transition: all .3s;
-  /*position: absolute;*/
-  /*top: 0;*/
-  width: 100%;
-  height: 7rem;
-  /*transform: translate( 0 , 0);*/
-}
-.allLyric>div p{
-  width: 70%;
-  margin: 0 auto;
-  height: 1rem;
-  position: relative;
-}
-.allLyric>div p span{
-  width: 100%;
-}
+
 .control{
 
 }
@@ -238,27 +153,8 @@
   top: 11px;
   z-index: 2;
 }
-.group ,.comments{
+.group{
   height: 8.5rem;
   overflow: hidden;
-}
-.comments{
-  padding: 30px 0;
-  overflow-y: auto;
-}
-.comment{
-  width: 96%;
-  margin: 0 auto;
-  border-bottom: 1px solid #8c8c8c;
-}
-.comment p{
-  width: 98%;
-  margin: 0 auto;
-  color: #d9d9d9;
-  word-wrap:break-word;
-  padding-bottom: 15px;
-}
-.comment_content{
-  color: #fff;
 }
 </style>

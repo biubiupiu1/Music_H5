@@ -6,6 +6,8 @@ import XiaMi from '../page/XIaMi.vue'
 import Search from '../page/Search.vue'
 import Home from '../page/Home.vue'
 import SongList from '../page/SongList.vue'
+import Comments from '../page/Comments.vue'
+import Test from '../page/Test.vue'
 
 Vue.use(Router);
 
@@ -43,7 +45,15 @@ export default new Router({
       path: '/songlist/:id',
       name: 'SongList',
       component: SongList,
-      children: []
+    },
+    {
+      path: '/comments/:id',
+      name: 'Comments',
+      component: Comments,
+    },
+    {
+      path: '/test',
+      component: Test
     }
   ]
 })

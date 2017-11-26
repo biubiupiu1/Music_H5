@@ -49,6 +49,7 @@
       }
     },
     beforeRouteUpdate (to, from, next) {
+      console.log("beforeRouteUpdate")
       this.SetAlpha();
       if(this.info.id !== to.params.id){
         this.LoadInfo();
@@ -56,10 +57,12 @@
       }
     },
     beforeRouteLeave(to, from, next){
+      console.log("beforeRouteLeave")
       window.onscroll = null;
       next();
     },
     created(){
+        console.log("created")
         this.LoadInfo();
         this.GetData();
     },
@@ -185,6 +188,7 @@
 }
 .lists{
   background: #fff;
+  padding-bottom: 1.1rem;
 }
 .lists .index{
   font-size: 20px;
