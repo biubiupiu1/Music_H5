@@ -21,6 +21,7 @@
 <style scoped>
 .top{
   font-family: 'ChannelSlanted2dc53f189b19aa7';
+  height: 1rem;
 }
 .top i{
   font-size: 35px;

@@ -4,7 +4,7 @@
       <top></top>
       <content-view></content-view>
     </div>
-    <div :style="style" class="view">
+    <div  class="view">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -19,9 +19,7 @@
     name: 'home',
     data () {
       return {
-          style: {
-            'padding-bottom': '70px'
-          }
+
       }
     },
     created(){
@@ -34,13 +32,17 @@
 </script>
 
 <style scoped>
-  .fixed{
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 2;
-  }
-  .view{
-    margin-top: 104px;
-  }
+.fixed{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+.view{
+  height: 86%;
+  margin-top: 1.8rem;
+}
+.home{
+  height: 100%;
+}
 </style>

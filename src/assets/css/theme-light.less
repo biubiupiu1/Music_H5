@@ -25,8 +25,31 @@
 
 ){
   //自加组件样式
-  .netease .title span{
-    border-color: @primaryColor;
+  .netease{
+    .title span{
+      border-color: @primaryColor;
+    }
+    select{
+    }
+    select:hover{
+      background-color: #fff;
+    }
+    option:hover{
+      background-color: #fff;
+    }
+    .hide p.active{
+      color: @primaryColor;
+    }
+  }
+  .fixed{
+    .content .mu-tabs{
+      height: 100%;
+      button{
+        font-size: .25rem;
+        padding: 0;
+        min-height: inherit;
+      }
+    }
   }
 
   .bot-player .header{
@@ -94,7 +117,7 @@
       color: #fff;
     }
     .mu-appbar{
-      height: 1rem;
+      height: 100%;
     }
     .mu-item-title{
       font-size: 0.30rem;

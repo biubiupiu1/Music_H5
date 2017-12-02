@@ -1,12 +1,19 @@
 <template>
   <div class="netease">
     <div class="title">
-      <span>推荐歌单</span>
+      <div class="select" >
+        <span @click="toggleSel">{{option === "hot" ? "热门歌单" : "新歌歌单"}}</span>
+        <i class="iconfont icon-select"></i>
+        <div class="hide" v-show="isSelect">
+          <p :class="{active: option === 'hot'}" @click="choose('hot')">热门歌单</p>
+          <p :class="{active: option === 'new'}" @click="choose('new')">新歌歌单</p>
+        </div>
+      </div>
     </div>
     <mu-circular-progress :size="60" v-if="isLoading"/>
     <div class="song-sheet" v-else="">
       <mu-flexbox wrap="wrap" justify="space-around" :gutter="0">
-        <mu-flexbox-item basis="40%" @click.native="ToSongList(item)" v-for="(item , index) in songLists" :key="item.id" class="sheet">
+        <mu-flexbox-item basis="40%" @click.native="ToSongList(item)" v-for="(item , index) in data[option].songLists" :key="item.id" class="sheet">
           <div class="sheet_top">
             <i class="iconfont icon-music"></i>{{item.playCount}}
             <i class="iconfont icon-play"></i>
@@ -16,7 +23,7 @@
         </mu-flexbox-item>
       </mu-flexbox>
     </div>
-    <mu-infinite-scroll :scroller="scroller" :loading="isLoadMore" :loadingText="loadingText" @load="loadMore"/>
+    <mu-infinite-scroll v-if="isDestroy" :scroller="scroller" :loading="isLoadMore" :loadingText="loadingText" @load="loadMore"/>
   </div>
 </template>
 
@@ -30,32 +37,55 @@
         num: 10,
         scroller: null,
         isLoadMore: false,
-        loadingText: '加载中。。。'
+        isDestroy: true,
+        option: 'hot',
+        loadingText: '加载中。。。',
+        isSelect: false,
+        data: {hot: {num: 10, songLists: []}, new: {num: 10, songLists: []}}
       }
     },
     created(){
+      console.log("created");
       this.loadData();
-      this.$http.get(this.$api.getPersonalized()).then((res) => {
-        console.log(res.data)
-      })
+    },
+    beforeRouteEnter (to, from, next) {
+      next( vm => {
+        vm.isDestroy = true;
+      });
+    },
+    beforeRouteLeave(to, from, next){
+      this.isDestroy = false;
+      next();
     },
     mounted(){
-      this.scroller = this.$el;
+      console.log(document.body);
+      this.scroller = window;
+    },
+    watch: {
+      option(val) {
+        if(this.data[val].songLists.length === 0){
+          this.isLoading = true;
+          this.loadData();
+        }
+        console.log(val);
+      }
     },
     methods:{
       loadData() {
-        this.$http.get(this.$api.getSongSheet('hot', this.num)).then((res) => {
-          console.log(res.data)
+
+        let opt = this.option
+        this.$http.get(this.$api.getSongSheet(opt, this.data[opt].num)).then((res) => {
           //this.songLists = res.data.playlists
-          this.LoadLists(res.data.playlists);
+          console.log(res.data.playlists)
+          this.LoadLists(res.data.playlists.slice(-10));
           this.isLoading = false;
           this.isLoadMore = false;
-          this.num += 10;
+          this.data[opt].num += 10;
         });
       },
       loadMore() {
         this.isLoadMore = true;
-        if(this.num > 100){
+        if(this.data[this.option].num > 100){
             this.loadingText = '我是有底线的@_@'
         } else
             this.loadData();
@@ -71,12 +101,19 @@
           obj.autho = e.creator.nickname;
           obj.description = e.description;
           obj.header = e.creator.avatarUrl;
-          _this.songLists.push(obj);
+          _this.data[_this.option].songLists.push(obj);
         });
         this.isLoading = false;
       },
+      choose(val) {
+        this.option = val;
+        this.isSelect = false;
+      },
       ToSongList(obj){
         this.$router.push({ name: 'SongList', params: {id: obj.id , data: obj }})
+      },
+      toggleSel() {
+        this.isSelect = !this.isSelect;
       }
     }
   }
@@ -84,20 +121,44 @@
 
 <style scoped>
 .netease{
-  padding: 10px;
+  padding: .1rem;
+  height: 100%;
+  overflow-y: auto;
+  min-height: 5rem;
 }
 .title{
-  height: 40px;
-  line-height: 40px;
-  padding: 5px;
+  height: .7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.title span{
+.select{
+  width: 25%;
+  height: .5rem;
+  position: relative;
+}
+.select i{
+  font-size: .1rem;
+  color: #929292;
+}
+.select>span{
   border-left: 3px solid;
   padding-left: 10px;
+  height: .4rem;
+  line-height: .4rem;
+}
+
+.hide{
+  padding-left: 13px;
+  position: absolute;
+  z-index: 5;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 .sheet{
   position: relative;
-  padding: 0px 4px;
+  margin: 0 4px;
 }
 .song-sheet img{
   width: 100%;
@@ -126,5 +187,14 @@
 .song-sheet .sheet_top .icon-play{
   float: right;
   padding-right: 10px;
+}
+select{
+  width: 20%;
+  border: none;
+  outline: none;
+  background: #fff;
+}
+
+select option[selected]{
 }
 </style>

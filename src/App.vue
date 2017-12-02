@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
     <keep-alive>
       <router-view v-show="isRoute"></router-view>
     </keep-alive>
@@ -35,6 +35,8 @@ export default {
     let resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
     window.addEventListener(resizeEvt, this.reSize, false);
   },
+  mounted() {
+  },
   watch:{
     songList(val){
       this.isBot = val.length > 0 ? 1 : 0;
@@ -65,12 +67,12 @@ export default {
 
 <style lang="less">
 @import './assets/css/theme-light';
+
 body{
   font-size: .25rem;
 }
 .lucky{
   .change();
-  overflow: hidden;
 }
 .float{
   float: left;

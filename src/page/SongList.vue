@@ -48,26 +48,21 @@
           return this.$route.params;
       }
     },
-    beforeRouteUpdate (to, from, next) {
-      console.log("beforeRouteUpdate")
-      this.SetAlpha();
-      if(this.info.id !== to.params.id){
-        this.LoadInfo();
-        this.GetData(next);
-      }
+    beforeRouteEnter (to, from, next) {
+      console.log("beforeRouteEnter");
+        next( vm => {
+          vm.SetAlpha();
+          if(vm.info.id !== to.params.id){
+            vm.LoadInfo();
+            vm.GetData();
+          }
+        });
+
     },
     beforeRouteLeave(to, from, next){
       console.log("beforeRouteLeave")
       window.onscroll = null;
       next();
-    },
-    created(){
-        console.log("created")
-        this.LoadInfo();
-        this.GetData();
-    },
-    mounted(){
-        this.SetAlpha();
     },
     methods:{
         LoadInfo(res){

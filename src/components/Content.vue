@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="">
     <mu-tabs :value="activeTab" @change="handleTabChange">
       <mu-tab value="NetEase" title="网易"/>
       <mu-tab value="QQ" title="扣扣"/>
@@ -31,6 +31,9 @@
 </script>
 
 <style scoped>
+.content{
+  height: .8rem;
+}
 .mu-tabs{
   background-color: #fff;
 }
