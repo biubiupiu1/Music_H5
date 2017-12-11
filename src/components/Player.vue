@@ -67,7 +67,9 @@
     },
     methods:{
       ToHome(){
+
           this.$emit('toHome');
+
       },
       ToComments(){
         if(!this.$empty(this.song.id)){

@@ -52,6 +52,7 @@ export default {
     },
     methods:{
       ToPlayer(event){
+        this.$store.state.scroll.NetEase = window.scrollY;
         this.$emit('toPlayer');
       },
       TogglePlay(){
@@ -71,7 +72,6 @@ export default {
         player.nowTime = dom.currentTime.toFixed(2);
         player.totalTime = parseInt( dom.duration );
         this.$store.state.player = Object.assign({},this.$store.state.player);
-//        console.log(dom.buffered.end(dom.buffered.length - 1) /  dom.duration)
       },
       LoadBufferProgress(){
         let dom = this.$refs.CoreAudio;
@@ -89,11 +89,11 @@ export default {
 
 <style scoped>
 .bot-player{
-  position: fixed;
-  bottom: 0px;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 1.15rem;
-  z-index: 10000;
+  z-index: 10;
   background-color: #f2f0f1;
 }
 .header{

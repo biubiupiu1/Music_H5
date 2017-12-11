@@ -31,17 +31,33 @@
         isLoading: true,
         isLoadMore: false,
         num: 10,
-        loadingText: '加载中.....'
+        loadingText: '加载中.....',
+        id: 0,
       }
     },
     created(){
-      this.loadComments(this.num, false);
-      this.loadSongName();
+
     },
     mounted(){
       this.scroller = this.$refs.scroller;
       this.setStyle();
       this.$store.state.reSize.push(this.setStyle);
+    },
+    beforeRouteEnter (to, from, next) {
+      next( vm => {
+        if(vm.id !== to.params.id){
+          vm.num = 10;
+          vm.isLoading = true;
+          vm.loadComments(vm.num, false);
+          vm.loadSongName();
+        }else {
+          vm.scroller.scrollTop = vm.$store.state.scroll.comments;
+        }
+      });
+    },
+    beforeRouteLeave(to, from, next){
+      this.$store.state.scroll.comments = this.scroller.scrollTop;
+      next();
     },
     computed:{
       title() {
@@ -68,9 +84,9 @@
         document.querySelector('.comments').style.height = window.screen.height - 1 * window.fontsize + 'px';
       },
       loadComments(limit, isLoadMore) {
-        this.$http.get(API.getComments(this.$route.params.id, limit)).then(res => {
+        this.id = this.$route.params.id;
+        this.$http.get(API.getComments(this.id, limit)).then(res => {
           if(res.data.code === 200){
-              console.log(res.data);
               if(!isLoadMore){
                 this.total = res.data.total;
                 this.hotComments = res.data.hotComments;
@@ -90,7 +106,6 @@
         }
         else {
           this.$http.get(API.getSongDetail(this.$route.params.id)).then(res => {
-            console.log(res.data);
             if(res.data.code === 200)
               this.songName = res.data.songs[0].name;
             else {

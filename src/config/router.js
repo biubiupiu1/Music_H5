@@ -56,11 +56,12 @@ export default new Router({
       component: Test
     }
   ],
-  scrollBehavior (to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  }
+  // scrollBehavior (to, from, savedPosition) {
+  //   console.log(savedPosition)
+  //   if (savedPosition) {
+  //     return savedPosition
+  //   } else {
+  //     return { x: 0, y: 0 }
+  //   }
+  // }
 })

@@ -14,11 +14,13 @@
     <div class="song-sheet" v-else="">
       <mu-flexbox wrap="wrap" justify="space-around" :gutter="0">
         <mu-flexbox-item basis="40%" @click.native="ToSongList(item)" v-for="(item , index) in data[option].songLists" :key="item.id" class="sheet">
-          <div class="sheet_top">
-            <i class="iconfont icon-music"></i>{{item.playCount}}
-            <i class="iconfont icon-play"></i>
+          <div class="img">
+            <img :src="item.imgUrl + '?param=300y300'">
+            <div class="sheet_top">
+              <i class="iconfont icon-music"></i>{{item.playCount}}
+              <i class="iconfont icon-play"></i>
+            </div>
           </div>
-          <img :src="item.imgUrl + '?param=300y300'">
           <div class="sheet_title">{{item.title}}</div>
         </mu-flexbox-item>
       </mu-flexbox>
@@ -50,16 +52,17 @@
     },
     beforeRouteEnter (to, from, next) {
       next( vm => {
+        vm.$el.scrollTop = vm.$store.state.scroll.netease;
         vm.isDestroy = true;
       });
     },
     beforeRouteLeave(to, from, next){
+      this.$store.state.scroll.netease = this.$el.scrollTop;
       this.isDestroy = false;
       next();
     },
     mounted(){
-      console.log(document.body);
-      this.scroller = window;
+      this.scroller = this.$el;
     },
     watch: {
       option(val) {
@@ -67,16 +70,17 @@
           this.isLoading = true;
           this.loadData();
         }
-        console.log(val);
       }
     },
     methods:{
+      backTopCallBack () {
+        window.alert('I back top!')
+      },
       loadData() {
 
         let opt = this.option
         this.$http.get(this.$api.getSongSheet(opt, this.data[opt].num)).then((res) => {
           //this.songLists = res.data.playlists
-          console.log(res.data.playlists)
           this.LoadLists(res.data.playlists.slice(-10));
           this.isLoading = false;
           this.isLoadMore = false;
@@ -168,7 +172,6 @@
 .song-sheet .sheet_title{
   box-sizing: border-box;
   padding: 5px;
-  height: 50px;
   margin: 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -182,12 +185,16 @@
   line-height: 30px;
   background: rgba(0,0,0,0.5);
   color: #fff;
-  bottom: 50px;
+  bottom: 0;
 }
 .song-sheet .sheet_top .icon-play{
   float: right;
   padding-right: 10px;
 }
+.img{
+  position: relative;
+}
+
 select{
   width: 20%;
   border: none;

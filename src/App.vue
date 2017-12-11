@@ -1,7 +1,7 @@
 <template>
   <div id="app" ref="app">
     <keep-alive>
-      <router-view v-show="isRoute"></router-view>
+        <router-view></router-view>
     </keep-alive>
     <bot-player v-show="isRoute && isBot" @toPlayer="isRoute = false" @show-sheet="OpenSheet"></bot-player>
     <transition name="slide-top">
@@ -60,14 +60,26 @@ export default {
       p = p > 1.067 ? 1.067 : p < 0.444 ? 0.444 : p;
       _html.setAttribute("style", "font-size:"+ p * 100 + "px");
       window.fontsize = p * 100;
-    }
+    },
   }
 }
 </script>
 
 <style lang="less">
-@import './assets/css/theme-light';
-
+@import 'assets/css/theme';
+body{
+  background: #ececec;
+}
+body,html,#app{
+  height: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+#app{
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+}
 body{
   font-size: .25rem;
 }
@@ -110,7 +122,6 @@ a{
   width: 100%;
   height: 100%;
   background: url("https://p1.music.126.net/Bt3dFUR9xWCd8wJlmrsgXg==/3429376768564696.jpg?param=500y500");
-  z-index: -1;
   top: 0;
   left: 0;
   background-repeat:no-repeat;

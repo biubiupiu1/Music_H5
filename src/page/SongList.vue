@@ -48,6 +48,9 @@
           return this.$route.params;
       }
     },
+    created() {
+        console.log("created");
+    },
     beforeRouteEnter (to, from, next) {
       console.log("beforeRouteEnter");
         next( vm => {
@@ -61,7 +64,7 @@
     },
     beforeRouteLeave(to, from, next){
       console.log("beforeRouteLeave")
-      window.onscroll = null;
+      this.$el.onscroll = null;
       next();
     },
     methods:{
@@ -115,7 +118,7 @@
         },
         SetAlpha(){
           console.log("SetAlpha");
-          window.scrollTo(0, 0);
+          this.$el.scrollTop  = 0;
           HTMLElement.prototype.__defineGetter__("currentStyle", function () {
             return this.ownerDocument.defaultView.getComputedStyle(this, null);
           });
@@ -123,13 +126,12 @@
           let dom = document.querySelector('.mu-appbar');
           let rgb = dom.currentStyle.backgroundColor.match(regexp);
           dom.style.backgroundColor = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0`;
-          window.onscroll = () => {
+          this.$el.onscroll = () => {
             this.handleScroll(rgb)
           };
         },
         handleScroll(rgb){
-          console.log(5);
-          let alpha = window.scrollY / 350;
+          let alpha = this.$el.scrollTop / 350;
           document.querySelector('.mu-appbar').style.backgroundColor = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
         },
         PlayMusic(index){
@@ -141,11 +143,15 @@
 </script>
 
 <style scoped>
+.song-list{
+  height: 100%;
+  overflow: auto;
+}
 .mu-appbar{
 
 }
 .title{
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -160,6 +166,8 @@
   color: #fff;
   font-size: 16px;
   padding: 10px;
+  z-index: 2;
+  position: relative;
 }
 .details_content .img img{
   width: 100%;

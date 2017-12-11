@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <mu-appbar title="Dou@ya Music" titleClass="top_title">
-      <i class="iconfont icon-qinglv"  slot="right"></i>
+      <i class="iconfont icon-qinglv"  slot="right" @click="toggle"></i>
     </mu-appbar>
   </div>
 </template>
@@ -12,7 +12,11 @@
     name: 'top',
     data () {
       return {
-
+      }
+    },
+    methods: {
+      toggle() {
+          this.$emit("toggle");
       }
     }
   }
@@ -21,7 +25,7 @@
 <style scoped>
 .top{
   font-family: 'ChannelSlanted2dc53f189b19aa7';
-  height: 1rem;
+  height: 60%;
 }
 .top i{
   font-size: 35px;

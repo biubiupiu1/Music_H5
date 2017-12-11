@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="content">
     <mu-tabs :value="activeTab" @change="handleTabChange">
       <mu-tab value="NetEase" title="网易"/>
       <mu-tab value="QQ" title="扣扣"/>
@@ -23,7 +23,6 @@
     },
     methods:{
       handleTabChange(val){
-        this.activeTab = val;
         this.$router.push({name: val});
       },
     }
@@ -32,7 +31,7 @@
 
 <style scoped>
 .content{
-  height: .8rem;
+  height: 40%;
 }
 .mu-tabs{
   background-color: #fff;

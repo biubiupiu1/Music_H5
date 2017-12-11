@@ -16,6 +16,10 @@ const store = new Vuex.Store({
     songList: [],
     autoPlay: true,
     repeat: false,
+    scroll: {
+      "netease": 0,
+      "comments": 0,
+    },
     song: {
       loading: false,
       id: '',
