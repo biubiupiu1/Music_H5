@@ -36,6 +36,7 @@ export default {
     window.addEventListener(resizeEvt, this.reSize, false);
   },
   mounted() {
+    this.setDefaultTheme();
   },
   watch:{
     songList(val){
@@ -45,6 +46,11 @@ export default {
   methods:{
     OpenSheet(){
       this.isSheet = true;
+    },
+    setDefaultTheme() {
+      let theme = localStorage.getItem("theme");
+      if(!this.$empty(theme))
+        document.body.className = theme;
     },
     reSize(){
       let funs = this.$store.state.reSize;
@@ -69,6 +75,7 @@ export default {
 @import 'assets/css/theme';
 body{
   background: #ececec;
+  position: relative;
 }
 body,html,#app{
   height: 100%;
@@ -101,20 +108,20 @@ a{
   bottom: 0;
 }
 .centerXY{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50% , -50%);
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50% , -50%) !important;
 }
 .centerX{
-  position: absolute;
-  left: 50%;
-  transform: translate(-50% , 0%);
+  position: absolute !important;
+  left: 50% !important;
+  transform:   translate(-50% , 0%) !important;
 }
 .centerY{
-  position: absolute;
-  top: 50%;
-  transform: translate(0% , -50%);
+  position: absolute !important;
+  top: 50% !important;
+  transform: translate(0% , -50%) !important;
 }
 
 .covebg{

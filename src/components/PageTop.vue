@@ -34,6 +34,9 @@
 </script>
 
 <style scoped>
+  .top{
+    height: 8%;
+  }
   .top .mu-appbar{
     background: rgba(0,0,0,0);
   }

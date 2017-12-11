@@ -1,49 +1,25 @@
-@import "../../../node_modules/muse-ui/less/colors";
-
-
 .change(
-
-  @primaryColor: @pinkA200 ,
-  @darkerPrimaryColor: @blue700,
-  @lighterPrimaryColor: @blue300,      // 浅一点的主色
-  @accentColor: @pinkA200,             // 强调色
-  @darkerAccentColor: @grey100,        // 更深的强调色
-  @lighterAccentColor: @grey500,       // 浅一点的强调色
-
-  // 文本颜色
-  @textColor: @darkBlack,
-  @secondaryTextColor: fade(@fullBlack, 54%),
-  @alternateTextColor: @white,
-  @borderColor: fade(@fullBlack, 12%),
-  @disabledColor: fade(@fullBlack, 38%),
-
-  // background
-  @backgroundColor: @white,           // 背景色
-  @statusBarBackgroundColor: @grey300, // web项目没有状态栏，所以也没有使用
-  @appbarBackgroundColor: @grey100, // 并未在appbar组件中应用
-  @dialogBackgroundColor: @white  // dialogs、 cards、 paper 组件背景
-
+  @primaryColor: #ff4081
 ){
   //自加组件样式
-
-
   div::-webkit-scrollbar {/*滚动条整体样式*/
     width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
     height: 4px;
   }
   div::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
     border-radius: 5px;
-    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
     background: rgba(0,0,0,0.2);
   }
   div::-webkit-scrollbar-track {/*滚动条里面轨道*/
-    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0);
     border-radius: 0;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0);
   }
 
   .mu-drawer{
     position: absolute !important;
+    width: 60%;
     background: rgb(255, 255, 255) !important;
     .mu-appbar{
       height: 8.4%;
@@ -255,12 +231,16 @@
   .mu-item-title{
     font-size: .28rem;
   }
-  button:before{
-
+  .mu-bottom-sheet{
+    position: absolute;
   }
   .allLyric .active{
     color: @primaryColor;
   }
+
+
+
+
 
 
   .mu-appbar {
@@ -840,25 +820,18 @@
   }
 }
 
-.style_dark {
-  .change(
-    @lightBlue700,
-    @lightBlue700,
-    @grey600,
-    @pinkA200,
-    @pinkA400,
-    @pinkA100,
-
-    @fullWhite,
-    fade(@fullWhite, 70%),
-    #303030,
-    fade(@fullWhite, 30%),
-    fade(@fullWhite, 30%),
-
-    // background
-    #303030,
-    @fullBlack,
-    @grey900,
-    #424242 // dialogs or cards
-  );
+.style_default{
+  .change()
+}
+.style_dark{
+  .change(#1565c0)
+}
+.style_light {
+  .change(#2196f3);
+}
+.style_green {
+  .change(#00c853);
+}
+.style_carbon{
+  .change(#474a4f);
 }

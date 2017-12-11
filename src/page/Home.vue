@@ -9,29 +9,19 @@
         <router-view></router-view>
       </keep-alive>
     </div>
-    <mu-drawer right :open="isOpen" @close="toggle()">
-      <mu-appbar>
-        <i class="iconfont icon-zhuti-copy"></i>主题替换
-      </mu-appbar>
-      <div class="header">
-        <img src="../assets/img/header.png" alt="">
-      </div>
-      <mu-list>
-        <mu-list-item :title="item" v-for="item in themes"/>
-      </mu-list>
-    </mu-drawer>
+    <right-drawer :isOpen="isOpen" @toggle="toggle"></right-drawer>
   </div>
 </template>
 
 <script>
   import Top from '../components/Top.vue'
   import ContentView from '../components/Content.vue'
+  import RightDrawer from '../components/RightDrawer.vue'
   export default {
     name: 'home',
     data () {
       return {
         isOpen: false,
-        themes: ["default", "dark"]
       }
     },
     created(){
@@ -41,7 +31,7 @@
       this.setStyle();
       this.$store.state.reSize.push(this.setStyle);
     },
-    components:{ Top,ContentView },
+    components:{ Top, ContentView, RightDrawer },
     methods: {
       setStyle() {
         document.querySelector('.view').style.paddingTop = window.screen.height * 0.14 + 'px';
@@ -70,19 +60,5 @@
   height: 100%;
   position: relative;
 }
-.header{
-  width: 50%;
-  margin: 0 auto;
-  border-radius: 50%;
-  margin-top: 30px;
-  overflow: hidden;
-}
-.header img{
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.iconfont {
-  font-size: .8rem;
-}
+
 </style>

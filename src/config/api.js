@@ -1,7 +1,7 @@
 /**
  * Created by biubiupiu on 2017/7/16.
  */
-const TEMP = '/api';
+const TEMP = 'http://39.108.53.123:3000';
 
 export default {
   getSongSheet( order , limit ){

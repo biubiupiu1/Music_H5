@@ -3,8 +3,8 @@
     <transition-group name="fade" >
       <div v-show="!isLyric" @click="ToggleLyric" key="group1">
         <div class="content">
-          <div class="img center">
-            <img class="center" :src="song.headerUrl" alt="">
+          <div class="img">
+            <img :src="song.headerUrl" alt="">
           </div>
         </div>
         <div class="Lyric">
@@ -149,12 +149,14 @@
 
 <style scoped>
 .content{
-  position: relative;
-  height: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .content .img{
-  width: 4.5rem;
-  height: 4.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 2rem;
   overflow: hidden;
   background: url("../assets/img/play_bg.png") no-repeat 50%;

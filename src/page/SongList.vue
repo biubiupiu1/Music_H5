@@ -1,12 +1,12 @@
 <template>
   <div class="song-list">
+    <div class="title">
+      <mu-appbar :title="title" :zDepth="zDepth">
+        <mu-icon-button slot="left" class="iconfont icon-fanhui" @click="Back"></mu-icon-button>
+      </mu-appbar>
+    </div>
     <div class="details">
       <div class="covebg" :style="{'background-image':'url(' + info.imgUrl + '?param=300y300)'}"></div>
-      <div class="title">
-        <mu-appbar :title="title" :zDepth="zDepth">
-          <mu-icon-button slot="left" class="iconfont icon-fanhui" @click="Back"></mu-icon-button>
-        </mu-appbar>
-      </div>
       <div class="details_content">
         <div class="img all">
           <img :src="info.imgUrl" alt="">
@@ -155,7 +155,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 5;
 }
 .details{
   padding: 50px 0;
